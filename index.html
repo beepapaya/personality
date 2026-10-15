@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>欲求の4タイプ性格診断 | 人生の法則</title>
+  <meta name="description" content="岡田斗司夫氏の『人生の法則』に基づく欲求の4タイプ診断アプリ。10問の質問（Yes/No/分からない）であなたの本質的な欲求と相性を判定します。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="background-decor">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="badge">岡田斗司夫「人生の法則」準拠</div>
+      <h1 class="logo-title">欲求の<span>4タイプ</span>診断</h1>
+      <p class="logo-subtitle">あなたを無意識に突き動かす「本当の欲求」を解き明かす</p>
+    </header>
+
+    <main id="main-content">
+      <!-- 1. Start Screen -->
+      <section id="start-screen" class="screen active">
+        <div class="card intro-card">
+          <div class="intro-visual">
+            <div class="quadrant-preview">
+              <div class="q-cell q-attention">注目型</div>
+              <div class="q-cell q-commander">司令型</div>
+              <div class="q-cell q-idealist">理想型</div>
+              <div class="q-cell q-analyst">法則型</div>
+              <div class="axis-x-label">← 抽象的 ｜ 具体的 →</div>
+              <div class="axis-y-label">外向 ↑<br>内向 ↓</div>
+            </div>
+          </div>
+
+          <div class="intro-text">
+            <h2>人間関係の悩みの9割は「欲求の違い」だった？</h2>
+            <p>
+              人は誰しも<strong>「司令型」「注目型」「理想型」「法則型」</strong>という4つの根本的な欲求のいずれかに突き動かされています。<br>
+              自分が何を求め、何を嫌うのかを知ることで、生きづらさの解消や人間関係の摩擦をスッキリ解決できます。
+            </p>
+          </div>
+
+          <div class="test-meta-info">
+            <div class="meta-item">
+              <span class="meta-icon">❓</span>
+              <span class="meta-text">質問数：<strong>10問</strong></span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-icon">🔘</span>
+              <span class="meta-text">回答形式：<strong>3択 (Yes / No / 分からない)</strong></span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-icon">⏱️</span>
+              <span class="meta-text">所要時間：<strong>約2分</strong></span>
+            </div>
+          </div>
+
+
+          <button id="start-btn" class="btn btn-primary btn-large">
+            <span>診断を開始する</span>
+            <svg class="btn-arrow" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </button>
+        </div>
+      </section>
+
+      <!-- 2. Question Screen -->
+      <section id="question-screen" class="screen">
+        <div class="progress-container">
+          <div class="progress-bar-wrap">
+            <div id="progress-bar" class="progress-bar" style="width: 10%;"></div>
+          </div>
+          <div class="progress-label">
+            <span>質問 <strong id="current-q-num">1</strong> / 10</span>
+            <span id="progress-percentage">10%</span>
+          </div>
+        </div>
+
+        <div class="card question-card">
+          <div class="q-tag" id="q-category">質問カテゴリ</div>
+          <h2 id="q-text" class="question-text">質問文がここに表示されます</h2>
+
+          <div class="choices-group">
+            <button class="choice-btn choice-yes" data-answer="yes">
+              <span class="choice-mark">⭕</span>
+              <span class="choice-text">はい（Yes）</span>
+              <span class="choice-sub">そう思う・当てはまる</span>
+            </button>
+            <button class="choice-btn choice-no" data-answer="no">
+              <span class="choice-mark">❌</span>
+              <span class="choice-text">いいえ（No）</span>
+              <span class="choice-sub">そう思わない・当てはまらない</span>
+            </button>
+            <button class="choice-btn choice-unknown" data-answer="unknown">
+              <span class="choice-mark">🔺</span>
+              <span class="choice-text">分からない・どちらでもない</span>
+              <span class="choice-sub">迷う・状況によって変わる</span>
+            </button>
+          </div>
+
+          <div class="card-footer">
+            <button id="prev-btn" class="btn btn-secondary btn-small" disabled>
+              ← 前の質問に戻る
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. Result Screen -->
+      <section id="result-screen" class="screen">
+        <!-- Main Result Hero Card -->
+        <div class="card result-hero-card" id="result-hero">
+          <div class="result-badge-wrap">
+            <span class="result-badge">あなたの診断結果</span>
+          </div>
+          <div class="type-lead">あなたの本質的な欲求は...</div>
+          <div class="type-main-title">
+            <span id="type-icon" class="type-icon">👑</span>
+            <h2 id="type-name" class="type-name">司令型</h2>
+          </div>
+          <div id="type-catchphrase" class="type-catchphrase">「勝負に勝ち、目に見える成果と序列の頂点を目指すリーダー」</div>
+          <div class="type-tags" id="type-tags">
+            <!-- tags dynamically inserted -->
+          </div>
+        </div>
+
+        <!-- Subtype & Coordinates Quick Summary -->
+        <div class="card summary-grid-card">
+          <div class="summary-item">
+            <div class="summary-label">サブタイプ（第2の傾向）</div>
+            <div class="summary-val" id="subtype-name">注目型 (25%)</div>
+          </div>
+          <div class="summary-item">
+            <div class="summary-label">欲求の座標軸</div>
+            <div class="summary-val" id="coordinates-text">外向的 × 具体的</div>
+          </div>
+        </div>
+
+        <!-- Visual Charts: Matrix & Radar/Bar -->
+        <div class="grid-2-col">
+          <!-- 4-Quadrant Matrix Canvas -->
+          <div class="card chart-card">
+            <h3 class="chart-title">📍 欲求の4タイプ・マトリクス</h3>
+            <p class="chart-desc">あなたの欲求ポジション（赤ピン）</p>
+            <div class="canvas-wrapper">
+              <canvas id="matrix-canvas" width="360" height="360"></canvas>
+            </div>
+            <div class="matrix-legend">
+              <span class="leg-item"><i class="dot dot-cmd"></i>司令</span>
+              <span class="leg-item"><i class="dot dot-att"></i>注目</span>
+              <span class="leg-item"><i class="dot dot-law"></i>法則</span>
+              <span class="leg-item"><i class="dot dot-idr"></i>理想</span>
+            </div>
+          </div>
+
+          <!-- Score Breakdown Chart Canvas -->
+          <div class="card chart-card">
+            <h3 class="chart-title">📊 4タイプスコア比率</h3>
+            <p class="chart-desc">あなたの内面にある4要素のバランス</p>
+            <div class="canvas-wrapper">
+              <canvas id="score-canvas" width="360" height="360"></canvas>
+            </div>
+            <div class="score-bars" id="score-bars">
+              <!-- Score progress bars -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Type Deep Dive Detail -->
+        <div class="card detail-card">
+          <h3 class="section-title">🔍 あなたのタイプ詳細分析</h3>
+          
+          <div class="detail-block">
+            <h4>🎯 根源的な欲求（何を求めて生きているか）</h4>
+            <p id="type-core-desire">詳細文...</p>
+          </div>
+
+          <div class="detail-grid">
+            <div class="detail-box box-strength">
+              <h4>✨ 強み・長所</h4>
+              <ul id="type-strengths"></ul>
+            </div>
+            <div class="detail-box box-weakness">
+              <h4>⚠️ 弱み・注意点</h4>
+              <ul id="type-weaknesses"></ul>
+            </div>
+          </div>
+
+          <div class="detail-grid">
+            <div class="detail-box box-good">
+              <h4>🔥 モチベーションが湧く瞬間</h4>
+              <p id="type-motivation"></p>
+            </div>
+            <div class="detail-box box-bad">
+              <h4>💥 最大のストレス・地雷</h4>
+              <p id="type-trigger"></p>
+            </div>
+          </div>
+
+          <div class="detail-block">
+            <h4>🌟 同タイプの有名人・代表例</h4>
+            <p id="type-examples" class="examples-text"></p>
+          </div>
+        </div>
+
+        <!-- Compatibility & Dynamics (4-Type Relationships) -->
+        <div class="card dynamics-card">
+          <h3 class="section-title">🔄 人間関係の力学（相性マップ）</h3>
+          <p class="section-desc">
+            4タイプの間には「憧れ（時計回り）」と「軽視（反時計回り）」、そして「理解不能な対角線」という普遍の法則があります。
+          </p>
+
+          <div class="dynamics-grid">
+            <!-- Admiration -->
+            <div class="dynamic-item item-admire">
+              <div class="dyn-header">
+                <span class="dyn-badge">💖 あなたが憧れるタイプ</span>
+                <strong id="dyn-admire-name">法則型</strong>
+              </div>
+              <p id="dyn-admire-desc" class="dyn-desc"></p>
+            </div>
+
+            <!-- Admired By -->
+            <div class="dynamic-item item-admired-by">
+              <div class="dyn-header">
+                <span class="dyn-badge">✨ あなたに憧れるタイプ</span>
+                <strong id="dyn-admiredby-name">注目型</strong>
+              </div>
+              <p id="dyn-admiredby-desc" class="dyn-desc"></p>
+            </div>
+
+            <!-- Look Down -->
+            <div class="dynamic-item item-lookdown">
+              <div class="dyn-header">
+                <span class="dyn-badge">😒 軽視しがちなタイプ</span>
+                <strong id="dyn-lookdown-name">注目型</strong>
+              </div>
+              <p id="dyn-lookdown-desc" class="dyn-desc"></p>
+            </div>
+
+            <!-- Opposite / Diagonal Enemy -->
+            <div class="dynamic-item item-opposite">
+              <div class="dyn-header">
+                <span class="dyn-badge">⚡ 最も理解不能な対角線（天敵）</span>
+                <strong id="dyn-opposite-name">理想型</strong>
+              </div>
+              <p id="dyn-opposite-desc" class="dyn-desc"></p>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- Action / Share Buttons -->
+        <div class="action-buttons-wrap">
+          <button id="copy-btn" class="btn btn-primary">
+            <span>📋 診断結果をテキストコピー</span>
+          </button>
+          <a id="share-x-btn" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-x">
+            <span>𝕏 で診断結果をシェア</span>
+          </a>
+          <button id="restart-btn" class="btn btn-secondary">
+            <span>🔄 もう一度診断する</span>
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <!-- Toast Notification for Copy -->
+    <div id="toast" class="toast">クリップボードにコピーしました！</div>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <p>Based on Toshio Okada's "Law of Life - 4 Types of Desires"</p>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
